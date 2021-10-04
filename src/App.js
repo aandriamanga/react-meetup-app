@@ -12,7 +12,7 @@ function App() {
         <Route path="/" exact>
           <AllMeetupsPage />
         </Route>
-        <Route path="/new-meetups">
+        <Route path="/new-meetup">
           <NewMeetupPage />
         </Route>
         <Route path="/favorites">

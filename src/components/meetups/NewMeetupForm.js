@@ -2,7 +2,7 @@ import { useRef } from 'react';
 import Card from '../meetups/ui/Card';
 import classes from './NewMeetupForm.module.css';
 
-function NewMeetupForm() {
+function NewMeetupForm(props) {
   const titleInputRef = useRef();
   const imageInputRef = useRef();
   const addressInputRef = useRef();
@@ -23,7 +23,7 @@ function NewMeetupForm() {
       description: enteredDescription,
     };
 
-    console.log(meetupData);
+    props.onAddMeetup(meetupData);
   }
   return (
     <Card>
@@ -42,8 +42,7 @@ function NewMeetupForm() {
         </div>
         <div className={classes.control}>
           <label htmlFor="description">Description</label>
-          <input
-            type="textarea"
+          <textarea
             required
             id="description"
             rows="5"

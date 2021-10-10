@@ -13,11 +13,32 @@ export function FavoritesContextProvider(props) {
   const [userFavorites, setUserFavorites] = useState([]);
 
   function addFavoriteHandler(favoriteMeetup) {
+    fetch(
+      `https://react-meetup-app-520de-default-rtdb.firebaseio.com/meetups/${favoriteMeetup.id}.json`,
+      {
+        method: 'PATCH',
+        body: JSON.stringify({ isFavorite: true }),
+        header: {
+          'Contebt-Type': 'application/json',
+        },
+      }
+    );
     setUserFavorites((prevUserFavorites) => {
       return prevUserFavorites.concat(favoriteMeetup);
     });
   }
   function removeFavoriteHandler(meetupId) {
+    fetch(
+      `https://react-meetup-app-520de-default-rtdb.firebaseio.com/meetups/${meetupId}.json`,
+      {
+        method: 'PATCH',
+        body: JSON.stringify({ isFavorite: false }),
+        header: {
+          'Contebt-Type': 'application/json',
+        },
+      }
+    );
+
     setUserFavorites((prevUserFavorites) => {
       return prevUserFavorites.filter((meetup) => meetup.id !== meetupId);
     });

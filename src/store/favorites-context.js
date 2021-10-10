@@ -1,4 +1,5 @@
 import { createContext, useState } from 'react';
+import { useEffect } from 'react/cjs/react.development';
 
 const FavoritesContext = createContext({
   favorites: [],
@@ -33,6 +34,26 @@ export function FavoritesContextProvider(props) {
     removeFavorite: removeFavoriteHandler,
     itemIsFavorite: itemIsFavoriteHandler,
   };
+
+  useEffect(() => {
+    fetch(
+      'https://react-meetup-app-520de-default-rtdb.firebaseio.com/meetups.json'
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        // const favoritesMeetup = [];
+        for (const key in data) {
+          if (data[key].isFavorite) {
+            const favoriteMeetup = {
+              id: key,
+              ...data[key],
+            };
+            // favoritesMeetup.push(favoriteMeetup);
+            addFavoriteHandler(favoriteMeetup);
+          }
+        }
+      });
+  }, []);
 
   return (
     <FavoritesContext.Provider value={context}>
